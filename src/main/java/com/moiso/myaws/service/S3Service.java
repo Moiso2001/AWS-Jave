@@ -2,8 +2,10 @@ package com.moiso.myaws.service;
 
 import java.net.URL;
 import java.util.Date;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -14,10 +16,15 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Service
 public class S3Service {
-    private final String accessKeyId = "AKIASSYQMUNMCF3E66WS";
-    private final String secretAccessKey = "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";
+    @Value("${aws.accessKeyId}")
+    private String accessKeyId;
+    
+    @Value("${aws.secretAccessKey}")
+    private String secretAccessKey;
+
+
     private final String region = "sa-east-1";
-    private final String bucketName = "tyquy-bucket";
+    private final String bucketName = "tyquy-buck";
     
     private final AmazonS3 s3Client;
 

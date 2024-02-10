@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.moiso.myaws.service.S3Service;
 
-@RestController("/s3")
+@RestController()
 public class S3Controller {
     private final S3Service s3Service;
 
