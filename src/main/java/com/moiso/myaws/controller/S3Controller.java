@@ -4,6 +4,7 @@ import java.net.URL;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +41,13 @@ public class S3Controller {
 
     @GetMapping("/images/{filename}")
     public ResponseEntity<String>  getPictre(@PathVariable String filename){
-        URL signedUrl = s3Service.getPreSignedUrl(filename);
-        return ResponseEntity.ok().body(signedUrl.toString());
+        try {
+            URL signedUrl = s3Service.getPreSignedUrl(filename);
+            return ResponseEntity.ok().body(signedUrl.toString());
+        } catch (Exception e) {
+            // Handle the exception here, you can log it or return an error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
     }
 
 }
