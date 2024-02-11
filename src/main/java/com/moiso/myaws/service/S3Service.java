@@ -22,7 +22,7 @@ public class S3Service {
     private final AwsController awsData;
     
     private final String region = "sa-east-1";
-    private final String bucketName = "tyquy-buck";
+    private final String bucketName = "tyquy-bucket";
     
     private final AmazonS3 s3Client;
 
@@ -44,8 +44,6 @@ public class S3Service {
     /* S3 Services */
     public String uploadFile(MultipartFile file) {
         try {
-
-
             s3Client.putObject(new PutObjectRequest(bucketName, file.getOriginalFilename(), file.getInputStream(), null));
             return "Image uploaded";
         } catch (Exception e) {
@@ -55,9 +53,6 @@ public class S3Service {
 
     public URL getPreSignedUrl(String fileName) throws Exception {
         try {
-            System.out.println(awsData.accessKeyId());
-            System.out.println(accessKeyId);
-
             Date expiration = new Date(System.currentTimeMillis() + 3600 * 1000);
             GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName)
                     .withMethod(com.amazonaws.HttpMethod.GET)
